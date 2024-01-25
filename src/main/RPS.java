@@ -33,7 +33,7 @@ public class RPS {
 		int computerinput = computer.getInput();
 		Driver.display("computer", computerinput);
 		// Compare moves and determine winner
-		int compareResult=Driver.compareSelections(playerinput, computerinput);
+		int compareResult = Driver.compareSelections(playerinput, computerinput);
 		switch (compareResult) {
 		case 0: // Tie
 			System.out.println("Tie!");
