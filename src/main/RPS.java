@@ -29,11 +29,37 @@ public class RPS {
 	public void startGame() {
 		int playerinput = player.getInput();
 		Driver.display(player.getName(), playerinput);
+		
 		// Get moves
 		int computerinput = computer.getInput();
 		Driver.display("computer", computerinput);
+		
 		// Compare moves and determine winner
 		int compareResult = Driver.compareSelections(playerinput, computerinput);
+		determineResult(compareResult);
+		numberOfGames++;
+		
+		if(playerScore==5)
+		{
+			System.out.println(player.getName()+" HAS WON THE GAME.............");
+			new RPS();
+		}
+		if(computerScore==5)
+		{
+			System.out.println("Computer "+" HAS WON THE GAME............");
+			new RPS();
+		}
+		
+		// Ask the player to play again
+		if (player.playAgain()) {
+			System.out.println();
+			startGame();
+		} else {
+			printStats();
+		}
+	}
+
+	private void determineResult(int compareResult) {
 		switch (compareResult) {
 		case 0: // Tie
 			System.out.println("Tie!");
@@ -46,24 +72,6 @@ public class RPS {
 			System.out.println("Computer" +" Beats "+ player.getName()+" You Lost!");
 			computerScore++;
 			break;
-		}
-		numberOfGames++;
-		if(playerScore==5)
-		{
-			System.out.println(player.getName()+" HAS WON THE GAME.............");
-			new RPS();
-		}
-		if(computerScore==5)
-		{
-			System.out.println("Computer "+" HAS WON THE GAME............");
-			new RPS();
-		}
-		// Ask the player to play again
-		if (player.playAgain()) {
-			System.out.println();
-			startGame();
-		} else {
-			printStats();
 		}
 	}
 	
