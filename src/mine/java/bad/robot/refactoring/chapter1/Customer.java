@@ -1,4 +1,3 @@
-package bad.robot.refactoring.chapter1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,18 +25,12 @@ public class Customer {
 
         String result = "Rental record for " + getName() + "\n";
         for (Rental rental : rentals) {
-            double amount = getChargeFor(rental);
-
-            // add frequent renter points
-            frequentRenterPoints++;
-            // add bonus for a two day new release rental
-            if (rental.getMovie().getPriceCode() == Movie.NEW_RELEASE && rental.getDaysRented() > 1)
-                frequentRenterPoints++;
+            frequentRenterPoints += rental.calculateFrequentRenterPoints(frequentRenterPoints);
 
             // show figures for this rental
-            result += "\t" + rental.getMovie().getTitle() + "\t" + String.valueOf(amount) + "\n";
+            result += "\t" + rental.getMovie().getTitle() + "\t" + String.valueOf(rental.getChargeFor()) + "\n";
 
-            totalAmount += amount;
+            totalAmount += rental.getChargeFor();
         }
 
         result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
@@ -45,22 +38,4 @@ public class Customer {
 
         return result;
     }
-
-    private double getChargeFor(Rental rental) {
-        double amount = 0;
-        switch (rental.getMovie().getPriceCode()) {
-            case Movie.REGULAR:
-                amount += 2;
-                if (rental.getDaysRented() > 2)
-                    amount += (rental.getDaysRented() - 2) * 1.5;
-                break;
-            case Movie.NEW_RELEASE:
-                amount += rental.getDaysRented() * 3;
-                break;
-            case Movie.CHILDREN:
-                amount += 1.5;
-                if (rental.getDaysRented() > 3)
-                    amount += (rental.getDaysRented() - 3) * 1.5;
-                break;
-        }
 }
